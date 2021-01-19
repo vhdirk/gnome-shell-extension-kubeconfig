@@ -24,7 +24,7 @@ var KubePopupMenuItem = GObject.registerClass ({GTypeName: 'KubePopupMenuItem'},
 
         this.label = new St.Label({ text: this.text });
 		this.box.add(this.label);
-        
+
         this.actor.add_child(this.box);
 
         this.connect("activate", Lang.bind(this, function(){
@@ -34,6 +34,7 @@ var KubePopupMenuItem = GObject.registerClass ({GTypeName: 'KubePopupMenuItem'},
                 let re = new RegExp('current-context:\\s(.+)','gm');
                 contents = contents.replace(re,'current-context: '+this.text.trim());
                 GLib.file_set_contents(path, contents);
+                GLib.chmod(path, 600);
             } catch (e) {
                 log('gnome-shell-extension-kubeconfig',e);
             }
